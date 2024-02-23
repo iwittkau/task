@@ -265,8 +265,7 @@ func run() error {
 	}
 
 	if (listOptions.ShouldListTasks()) && flags.silent {
-		e.ListTaskNames(flags.listAll)
-		return nil
+		return e.ListTaskNames(flags.listAll)
 	}
 
 	if err := e.Setup(); err != nil {
@@ -291,7 +290,7 @@ func run() error {
 	}
 
 	var (
-		calls   []ast.Call
+		calls   []*ast.Call
 		globals *ast.Vars
 	)
 
@@ -304,7 +303,7 @@ func run() error {
 
 	// If there are no calls, run the default task instead
 	if len(calls) == 0 {
-		calls = append(calls, ast.Call{Task: "default"})
+		calls = append(calls, &ast.Call{Task: "default"})
 	}
 
 	globals.Set("CLI_ARGS", ast.Var{Value: cliArgs})
